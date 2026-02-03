@@ -1,3 +1,4 @@
+// Comment
 package com.appsecco.dvja.services;
 
 import com.appsecco.dvja.models.User;
@@ -109,3 +110,4 @@ public class UserService {
         return DigestUtils.md5DigestAsHex(password.getBytes());
     }
 }
+ 
