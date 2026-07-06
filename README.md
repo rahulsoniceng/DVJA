@@ -15,7 +15,7 @@ To update image
 docker-compose build
 ```
 
-## Requirements
+## Requirements 
 
 * Java 1.7+
 * Maven 3.x
