@@ -75,6 +75,11 @@ public class ApiAction extends BaseController {
 
         User user = userService.findByLogin(getLogin());
 
+        if(user == null) {
+            results.put("error", "Login not found");
+            return renderJSON(results);
+        }
+
         results.put("login", getLogin());
         results.put("present", "true");
         results.put("email", user.getEmail());
