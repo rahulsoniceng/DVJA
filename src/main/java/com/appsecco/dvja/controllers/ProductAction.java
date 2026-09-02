@@ -87,7 +87,8 @@ public class ProductAction extends BaseController {
             return SUCCESS;
         }
         catch(Exception e) {
-            addActionError("Error Occurred: " + e.getMessage());
+            log.error("Error occurred during product operation", e);
+            addActionError("An unexpected error occurred. Please contact the administrator.");
             return INPUT;
         }
     }
