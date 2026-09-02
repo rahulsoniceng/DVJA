@@ -71,11 +71,15 @@ public class UserAction extends BaseController {
     }
 
     public String edit() {
-        if(sessionGetUser() != null) {
-            setUser(sessionGetUser());
-            setUserId(getUser().getId());
-            setEmail(getUser().getEmail());
+        User sessionUser = sessionGetUser();
+        if(sessionUser == null) {
+            addActionError("You must be logged in to edit your account");
+            return INPUT;
         }
+
+        int sessionUserId = sessionUser.getId();
+        setUser(sessionUser);
+        setEmail(sessionUser.getEmail());
 
         if(StringUtils.isEmpty(getPassword()) || StringUtils.isEmpty(getPasswordConfirmation()))
             return INPUT;
@@ -85,9 +89,9 @@ public class UserAction extends BaseController {
             return INPUT;
         }
 
-        user = userService.find(getUserId());
+        user = userService.find(sessionUserId);
         if(user == null) {
-            addActionError("Failed to find user with id: " + getUserId());
+            addActionError("Failed to find user with id: " + sessionUserId);
             return INPUT;
         }
 
@@ -95,7 +99,7 @@ public class UserAction extends BaseController {
             user.setEmail(getEmail());
 
         user.setPassword(getPassword());
-        user.setId(getUserId());
+        user.setId(sessionUserId);
         userService.save(user);
 
         return SUCCESS;
