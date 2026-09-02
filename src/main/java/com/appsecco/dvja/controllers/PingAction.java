@@ -31,6 +31,12 @@ public class PingAction extends BaseController {
         if(StringUtils.isEmpty(getAddress()))
             return INPUT;
 
+        // Allowlist validation: only permit valid IPv4, IPv6, or hostname characters
+        if (!getAddress().matches("^[a-zA-Z0-9.:\\-]+$")) {
+            addActionMessage("Invalid address specified.");
+            return INPUT;
+        }
+
         try {
             doExecCommand();
         } catch (Exception e) {
@@ -42,7 +48,7 @@ public class PingAction extends BaseController {
 
     private void doExecCommand() throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        String[] command = { "/bin/bash", "-c", "ping -t 5 -c 5 " + getAddress() };
+        String[] command = { "ping", "-t", "5", "-c", "5", getAddress() };
         Process process = runtime.exec(command);
 
         BufferedReader  stdinputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
