@@ -5,7 +5,7 @@ import com.appsecco.dvja.models.User;
 import com.appsecco.dvja.services.UserService;
 import org.apache.commons.lang.StringUtils;
 
-import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,11 +36,11 @@ public class ApiAction extends BaseController {
         Map results = new HashMap();
         boolean isAdmin = false;
 
-        Cookie[] cookies = getServletRequest().getCookies();
-        for(Cookie c: (cookies != null ? cookies : new Cookie[0])) {
-            if(c.getName().equals("admin") && c.getValue().equals("1")) {
+        HttpSession session = getServletRequest().getSession(false);
+        if (session != null) {
+            Object role = session.getAttribute("role");
+            if ("admin".equals(role)) {
                 isAdmin = true;
-                break;
             }
         }
 
