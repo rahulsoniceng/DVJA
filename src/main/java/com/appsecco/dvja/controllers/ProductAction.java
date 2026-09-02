@@ -70,7 +70,12 @@ public class ProductAction extends BaseController {
 
     public String execute() {
         if(!StringUtils.isEmpty(getProductId()) && (product == null)) {
-            product = productService.find(Integer.parseInt(getProductId()));
+            try {
+                product = productService.find(Integer.parseInt(getProductId()));
+            } catch (NumberFormatException e) {
+                addActionError("Invalid product ID.");
+                return INPUT;
+            }
             return INPUT;
         }
 
