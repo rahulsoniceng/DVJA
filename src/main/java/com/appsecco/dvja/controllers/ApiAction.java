@@ -36,7 +36,8 @@ public class ApiAction extends BaseController {
         Map results = new HashMap();
         boolean isAdmin = false;
 
-        for(Cookie c: getServletRequest().getCookies()) {
+        Cookie[] cookies = getServletRequest().getCookies();
+        for(Cookie c: (cookies != null ? cookies : new Cookie[0])) {
             if(c.getName().equals("admin") && c.getValue().equals("1")) {
                 isAdmin = true;
                 break;
