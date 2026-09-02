@@ -70,10 +70,25 @@ public class ProductAction extends BaseController {
 
     public String execute() {
         if(!StringUtils.isEmpty(getProductId()) && (product == null)) {
+            if (!getProductId().matches("\\d{1,9}")) {
+                addActionError("Invalid product ID.");
+                return INPUT;
+            }
+            int parsedProductId;
             try {
-                product = productService.find(Integer.parseInt(getProductId()));
+                parsedProductId = Integer.parseInt(getProductId());
             } catch (NumberFormatException e) {
                 addActionError("Invalid product ID.");
+                return INPUT;
+            }
+            if (!hasRole("admin") && !isOwner(parsedProductId)) {
+                addActionError("Access denied.");
+                return INPUT;
+            }
+            try {
+                product = productService.find(parsedProductId);
+            } catch (Exception e) {
+                addActionError("Error retrieving product.");
                 return INPUT;
             }
             return INPUT;
