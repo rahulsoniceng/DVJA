@@ -77,6 +77,8 @@ public class UserAction extends BaseController {
             return INPUT;
         }
 
+        // Always derive the userId exclusively from the authenticated session;
+        // never trust the userId request parameter to prevent IDOR.
         int sessionUserId = sessionUser.getId();
         setUser(sessionUser);
         setEmail(sessionUser.getEmail());
@@ -92,6 +94,12 @@ public class UserAction extends BaseController {
         user = userService.find(sessionUserId);
         if(user == null) {
             addActionError("Failed to find user with id: " + sessionUserId);
+            return INPUT;
+        }
+
+        // Verify the fetched user's id matches the session user id before modifying.
+        if(user.getId() != sessionUserId) {
+            addActionError("Unauthorized access");
             return INPUT;
         }
 
