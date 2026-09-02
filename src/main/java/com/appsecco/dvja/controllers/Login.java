@@ -53,6 +53,18 @@ public class Login extends BaseController {
     }
 
     public String execute() {
+        if (isInvalid(login) || isInvalid(password)) {
+            return ERROR;
+        }
+        User user = userAuthenticationService.authenticate(login, password);
+        if (user == null) {
+            return ERROR;
+        }
+        sessionSetUser(user);
+        return SUCCESS;
+    }
+
+    public String execute_unused() {
         User user;
 
         if(StringUtils.isEmpty(getLogin()) || StringUtils.isEmpty(getPassword()))
