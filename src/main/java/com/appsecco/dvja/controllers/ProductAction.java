@@ -60,10 +60,16 @@ public class ProductAction extends BaseController {
     }
 
     public String list() {
-        if(StringUtils.isEmpty(searchQuery))
+        if(StringUtils.isEmpty(searchQuery)) {
             products = productService.findAll();
-        else
-            products = productService.findContainingName(searchQuery);
+        } else {
+            String sanitizedQuery = searchQuery.replaceAll("[^a-zA-Z0-9 _\\-]", "");
+            if(StringUtils.isEmpty(sanitizedQuery)) {
+                products = productService.findAll();
+            } else {
+                products = productService.findContainingName(sanitizedQuery);
+            }
+        }
 
         return SUCCESS;
     }
