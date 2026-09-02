@@ -1,5 +1,7 @@
 package com.appsecco.dvja.controllers;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import org.apache.commons.lang.StringUtils;
 
 public class RedirectAction extends BaseController {
