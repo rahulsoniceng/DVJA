@@ -117,7 +117,7 @@ public class UserAction extends BaseController {
             }
         }
         catch(Exception e) {
-            addActionError("Error Occurred: " + e.getMessage());
+            addActionError("An unexpected error occurred. Please try again later.");
             return INPUT;
         }
 
