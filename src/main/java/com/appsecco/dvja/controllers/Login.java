@@ -23,6 +23,18 @@ public class Login extends BaseController {
         return login;
     }
 
+    public String execute() {
+        if (isInvalid(login) || isInvalid(password)) {
+            return ERROR;
+        }
+        com.appsecco.dvja.models.User user = userAuthenticationService.authenticate(login, password);
+        if (user == null) {
+            return ERROR;
+        }
+        sessionSetUser(user);
+        return SUCCESS;
+    }
+
     public void setLogin(String login) {
         this.login = login;
     }
