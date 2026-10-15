@@ -9,8 +9,8 @@
     <name>dvja</name>
 
     <properties>
-        <struts2.version>2.3.30</struts2.version>
-        <log4j2.version>2.3</log4j2.version>
+        <struts2.version>6.8.0</struts2.version>
+        <log4j2.version>2.25.4</log4j2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>3.0.5.RELEASE</spring.version>
     </properties>
@@ -97,7 +97,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>3.3.1.GA</version>
+            <version>7.4.13.Final</version>
         </dependency>
 
         <dependency>
